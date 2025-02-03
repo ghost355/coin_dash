@@ -33,7 +33,7 @@ func _process(delta: float) -> void:
 func start():
 	set_process(true)
 	position = screensize / 2
-	%AnimatedSprite2D.animation = "idle"
+	$AnimatedSprite2D.animation = "idle"
 
 
 func die():
