@@ -7,7 +7,7 @@ func update_score(value):
 	$MarginContainer/Score.text = str(value)
 
 
-func update_time(value):
+func update_timer(value):
 	$MarginContainer/Time.text = str(value)
 
 
@@ -33,3 +33,9 @@ func show_game_over():
 	$StartButton.show()
 	$Message.text = "Coin Dash!"
 	$Message.show()
+
+
+func _on_button_pressed() -> void:
+	$StartButton.hide()
+	$Message.hide()
+	start_game.emit()

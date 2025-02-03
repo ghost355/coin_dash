@@ -47,7 +47,7 @@ func spawn_coins():
 
 func _on_game_timer_timeout() -> void:
 	time_left -= 1
-	$HUD.update_time(time_left)
+	$HUD.update_timer(time_left)
 	if time_left < 0:
 		game_over()
 
