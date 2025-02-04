@@ -73,6 +73,7 @@ func _on_game_timer_timeout() -> void:
 
 
 func _on_player_hurt() -> void:
+	$HitSound.play()
 	game_over()
 
 
