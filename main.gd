@@ -2,6 +2,7 @@ extends Node
 
 @export var coin_scene: PackedScene
 @export var powerup_scene: PackedScene
+@export var cactus_scene: PackedScene
 @export var playtime = 30
 
 var level = 1
@@ -23,6 +24,7 @@ func _process(delta: float) -> void:
 	if playing and get_tree().get_nodes_in_group("coins").size() == 0:
 		level += 1
 		time_left += 5
+		spawn_cactus()
 		spawn_coins()
 		$PowerupTimer.wait_time = randf_range(5, 10)
 		$PowerupTimer.start()
@@ -39,6 +41,17 @@ func new_game():
 	spawn_coins()
 	$HUD.update_score(score)
 	$HUD.update_timer(time_left)
+
+
+func spawn_cactus():
+	if level % 2 == 0:
+		var k = cactus_scene.instantiate()
+		add_child(k)
+		k.screensize = screensize
+		k.position = Vector2(
+			randi_range(screensize.x * 0.2, screensize.x * 0.8),
+			randi_range(screensize.y * 0.2, screensize.y * 0.8)
+		)
 
 
 func spawn_coins():
