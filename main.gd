@@ -62,7 +62,10 @@ func spawn_coins():
 		var c = coin_scene.instantiate()  # create a new coin node
 		add_child(c)  # add the new coin node to the root node
 		c.screensize = screensize  # share gotten screensize with coin node
-		c.position = Vector2(randi_range(0, screensize.x), randi_range(0, screensize.y))
+		c.position = Vector2(
+			randi_range(screensize.x * 0.05, screensize.x * 0.95),
+			randi_range(screensize.y * 0.05, screensize.y * 0.95)
+		)
 
 
 func _on_game_timer_timeout() -> void:
