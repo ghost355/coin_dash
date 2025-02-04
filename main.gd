@@ -42,6 +42,7 @@ func new_game():
 
 
 func spawn_coins():
+	$LevelSound.play()
 	for i in level + 4:
 		var c = coin_scene.instantiate()  # create a new coin node
 		add_child(c)  # add the new coin node to the root node
@@ -51,8 +52,8 @@ func spawn_coins():
 
 func _on_game_timer_timeout() -> void:
 	time_left -= 1
-	$HUD.update_time(time_left)
-	if time_left < 0:
+	$HUD.update_timer(time_left)
+	if time_left == 0:
 		game_over()
 
 
@@ -63,6 +64,7 @@ func _on_player_hurt() -> void:
 func _on_player_pickup(type) -> void:
 	match type:
 		"coin":
+			$CoinSound.play()
 			score += 1
 			$HUD.update_score(score)
 		"powerup":
@@ -72,6 +74,7 @@ func _on_player_pickup(type) -> void:
 
 
 func game_over():
+	$EndSound.play()
 	playing = false
 	$GameTimer.stop()
 	get_tree().call_group("coins", "queue_free")
