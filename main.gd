@@ -71,3 +71,13 @@ func game_over():
 
 func _on_hud_start_game() -> void:
 	new_game()
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventKey:
+		if event.pressed:
+			match event.keycode:
+				KEY_ESCAPE:
+					get_tree().quit()
+				KEY_ENTER:
+					$StartButton.emit_signal("pressed")

@@ -61,6 +61,7 @@ theme_override_font_sizes/font_size = 48
 text = "Start"
 
 [node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
 one_shot = true
 
 [connection signal="pressed" from="StartButton" to="." method="_on_button_pressed"]
