@@ -1,6 +1,7 @@
 extends Node
 
 @export var coin_scene: PackedScene
+@export var powerup_scene: PackedScene
 @export var playtime = 30
 
 var level = 1
@@ -18,10 +19,13 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
+	# What happens when you've picked up all the coins = Next Level
 	if playing and get_tree().get_nodes_in_group("coins").size() == 0:
 		level += 1
 		time_left += 5
 		spawn_coins()
+		$PowerupTimer.wait_time = randf_range(5, 10)
+		$PowerupTimer.start()
 
 
 func new_game():
@@ -38,7 +42,6 @@ func new_game():
 
 
 func spawn_coins():
-	$LevelSound.play()
 	for i in level + 4:
 		var c = coin_scene.instantiate()  # create a new coin node
 		add_child(c)  # add the new coin node to the root node
@@ -48,7 +51,7 @@ func spawn_coins():
 
 func _on_game_timer_timeout() -> void:
 	time_left -= 1
-	$HUD.update_timer(time_left)
+	$HUD.update_time(time_left)
 	if time_left < 0:
 		game_over()
 
@@ -57,14 +60,18 @@ func _on_player_hurt() -> void:
 	game_over()
 
 
-func _on_player_pickup() -> void:
-	$CoinSound.play()
-	score += 1
-	$HUD.update_score(score)
+func _on_player_pickup(type) -> void:
+	match type:
+		"coin":
+			score += 1
+			$HUD.update_score(score)
+		"powerup":
+			$PowerupSound.play()
+			time_left += 5
+			$HUD.update_timer(time_left)
 
 
 func game_over():
-	$EndSound.play()
 	playing = false
 	$GameTimer.stop()
 	get_tree().call_group("coins", "queue_free")
@@ -76,11 +83,8 @@ func _on_hud_start_game() -> void:
 	new_game()
 
 
-func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventKey:
-		if event.pressed:
-			match event.keycode:
-				KEY_ESCAPE:
-					get_tree().quit()
-				KEY_ENTER:
-					$StartButton.emit_signal("pressed")
+func _on_powerup_timer_timeout() -> void:
+	var p = powerup_scene.instantiate()
+	add_child(p)
+	p.screensize = screensize
+	p.position = Vector2(randi_range(0, screensize.x), randi_range(0, screensize.y))
