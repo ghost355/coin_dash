@@ -10,3 +10,14 @@ func pickup():
 	tw.tween_property(self, "modulate:a", 0, 0.3)
 	await tw.finished
 	queue_free()
+
+
+func _ready() -> void:
+	# when timer starts for each instance of coin
+	$Timer.start(randi_range(3, 8))
+
+
+func _on_timer_timeout() -> void:
+	# start animation after random time for each coin
+	$AnimatedSprite2D.frame = 0
+	$AnimatedSprite2D.play()

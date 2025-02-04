@@ -49,8 +49,8 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("12_eacyo")
 }],
-"loop": true,
-"name": &"shine",
+"loop": false,
+"name": &"coin",
 "speed": 12.0
 }]
 
@@ -64,8 +64,11 @@ metadata/_edit_group_ = true
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["coins"]]
 scale = Vector2(0.4, 0.4)
 sprite_frames = SubResource("SpriteFrames_jkuqn")
-animation = &"shine"
-frame_progress = 0.655136
+animation = &"coin"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_nfoip")
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

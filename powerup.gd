@@ -14,3 +14,8 @@ func pickup():
 
 func _on_lifetime_timeout() -> void:
 	queue_free()
+
+
+func _on_timer_timeout() -> void:
+	$AnimatedSprite2D.frame = 0
+	$AnimatedSprite2D.play()
