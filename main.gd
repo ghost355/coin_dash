@@ -47,6 +47,8 @@ func spawn_cactus():
 	if level % 2 == 0:
 		var k = cactus_scene.instantiate()
 		add_child(k)
+		if randi() % 2:
+			k.get_node("Sprite2D").flip_h = true
 		k.screensize = screensize
 		k.position = Vector2(
 			randi_range(screensize.x * 0.2, screensize.x * 0.8),
@@ -92,6 +94,7 @@ func game_over():
 	$GameTimer.stop()
 	get_tree().call_group("coins", "queue_free")
 	get_tree().call_group("powerups", "queue_free")
+	get_tree().call_group("obstacles", "queue_free")
 	$HUD.show_game_over()
 	$Player.die()
 
