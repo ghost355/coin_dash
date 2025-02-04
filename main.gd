@@ -47,8 +47,6 @@ func spawn_cactus():
 	if level % 2 == 0:
 		var k = cactus_scene.instantiate()
 		add_child(k)
-		if randi() % 2:
-			k.get_node("Sprite2D").flip_h = true
 		k.screensize = screensize
 		k.position = Vector2(
 			randi_range(screensize.x * 0.2, screensize.x * 0.8),
